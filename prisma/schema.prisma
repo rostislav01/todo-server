@@ -19,6 +19,9 @@ model Users {
   password String 
   username String @unique
   email String @unique 
+
+  tasks Task[]
+  projects Project[]
 }
 
 
@@ -31,6 +34,9 @@ model Project {
   description String?
 
   tasks Task[]
+
+  user   Users? @relation(fields: [userId], references: [id])
+  userId Int?
 }
 
 model Task {
@@ -48,6 +54,9 @@ model Task {
 
   project   Project? @relation(fields: [projectId], references: [id])
   projectId Int?
+
+  user   Users? @relation(fields: [userId], references: [id])
+  userId Int?
 }
 
 model SubTask {

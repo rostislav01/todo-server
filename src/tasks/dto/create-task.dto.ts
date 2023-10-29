@@ -1,4 +1,5 @@
-import { TypePriority, TypeStatusTask } from "src/types/status.type";
+import { TypePriority } from "src/types/priority.type";
+import { TypeStatusTask } from "src/types/status.type";
 
 export class CreateTaskDto {
 	title: string;

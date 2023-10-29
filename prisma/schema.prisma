@@ -57,5 +57,6 @@ enum TaskStatus {
   ACTIVE
   AT_WORK
   COMPLETED
+  OVERDUE
 }
 

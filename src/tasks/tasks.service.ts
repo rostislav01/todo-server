@@ -19,7 +19,8 @@ export class TasksService {
         }
       });
       if (tasks.length === 0) throw new NotFoundException();
-      tasks.forEach((item) => console.log(item.createdAt))
+      const filteredTasks = tasks.filter((item) => item.executionDate < item.createdAt)
+      filteredTasks.forEach(item => item.status = "OVERDUE")
       return tasks;
     } catch (error) {
       throw new HttpException('Tasks not found!', HttpStatus.NOT_FOUND);
@@ -39,7 +40,7 @@ export class TasksService {
     }
   }
 
-  async create(createTaskDto: CreateTaskDto) {
+   async create(createTaskDto: CreateTaskDto) {
     try {
       const task = await this.prisma.task.create({
         data: createTaskDto,

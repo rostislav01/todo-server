@@ -69,7 +69,7 @@ export class ProjectsService {
 
   async remove(id: number) {
     try {
-      const tasks = await this.prisma.task.deleteMany({
+      await this.prisma.task.deleteMany({
         where: {
           project: {
             id

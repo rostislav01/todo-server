@@ -6,4 +6,5 @@ export class CreateTaskDto {
 	status: TypeStatusTask;
 	prioriry: TypePriority;
 	executionDate: Date;
+	projectId: number;
 }

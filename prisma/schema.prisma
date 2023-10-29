@@ -22,6 +22,17 @@ model Users {
 }
 
 
+model Project {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  title String
+  description String?
+
+  tasks Task[]
+}
+
 model Task {
   id Int @id @default(autoincrement())
   createdAt DateTime @default(now()) @map("created_at")
@@ -30,9 +41,13 @@ model Task {
   title String
   description String?
   executionDate DateTime? @default(now())
+
   status TaskStatus @default(ACTIVE)
   priority Priority @default(ROUTINE)
   subTasks SubTask[]
+
+  project   Project? @relation(fields: [projectId], references: [id])
+  projectId Int?
 }
 
 model SubTask {

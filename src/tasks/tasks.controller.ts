@@ -7,8 +7,6 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
-
-
   @Get()
   findAll() {
     return this.tasksService.findAll();

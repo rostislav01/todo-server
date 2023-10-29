@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestj
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { PrismaService } from 'src/config/prisma.config';
+import { TypeStatusTask } from 'src/types/status.type';
 
 @Injectable()
 export class TasksService {
@@ -18,6 +19,7 @@ export class TasksService {
         }
       });
       if (tasks.length === 0) throw new NotFoundException();
+      tasks.forEach((item) => console.log(item.createdAt))
       return tasks;
     } catch (error) {
       throw new HttpException('Tasks not found!', HttpStatus.NOT_FOUND);
@@ -40,7 +42,7 @@ export class TasksService {
   async create(createTaskDto: CreateTaskDto) {
     try {
       const task = await this.prisma.task.create({
-        data: createTaskDto
+        data: createTaskDto,
       })
       return task;
     } catch(error) {
@@ -66,8 +68,8 @@ export class TasksService {
     try {
       const task = await this.prisma.task.delete({
         where: {
-          id: +id
-        }
+          id,
+        },
       })
       return task;
     } catch(error) {

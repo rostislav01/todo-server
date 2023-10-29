@@ -29,7 +29,7 @@ model Task {
 
   title String
   description String?
-
+  executionDate DateTime? @default(now())
   status TaskStatus @default(ACTIVE)
   priority Priority @default(ROUTINE)
   subTasks SubTask[]
@@ -42,10 +42,10 @@ model SubTask {
 
   title String
   description String?
-  
+
   status TaskStatus @default(ACTIVE)
   task   Task @relation(fields: [taskId], references: [id])
-  taskId Int  @unique
+  taskId Int
 }
 
 enum Priority {

@@ -5,5 +5,5 @@ export class CreateTaskDto {
 	description: string;
 	status: TypeStatusTask;
 	prioriry: TypePriority;
-	executionDate: any;
+	executionDate: Date;
 }

@@ -19,7 +19,7 @@ export class TasksService {
         }
       });
       if (tasks.length === 0) throw new NotFoundException();
-      const filteredTasks = tasks.filter((item) => item.executionDate < item.createdAt)
+      const filteredTasks = tasks.filter((item) => item.executionDate <= item.createdAt)
       filteredTasks.forEach(item => item.status = "OVERDUE")
       return tasks;
     } catch (error) {

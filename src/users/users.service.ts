@@ -1,31 +1,28 @@
-import { PrismaService } from "src/config/prisma.config";
-import { Users } from "./users.model";
-import { ConflictException, Injectable } from "@nestjs/common";
-
+import { PrismaService } from 'src/config/prisma.config';
+import { Users } from './users.model';
+import { ConflictException, Injectable } from '@nestjs/common';
 
 @Injectable()
-export class UsersService{
+export class UsersService {
+  constructor(private prisma: PrismaService) {}
 
-     constructor(private prisma: PrismaService){}
+  async getAllUser(): Promise<Users[]> {
+    return await this.prisma.users.findMany();
+  }
 
-     async getAllUser():Promise<Users[]>{
-          return this.prisma.users.findMany()
-     }
+  async createUser(data: Users): Promise<Users> {
+    const existing = await this.prisma.users.findUnique({
+      where: {
+        username: data.username,
+      },
+    });
 
+    if (existing) {
+      throw new ConflictException('username already exists');
+    }
 
-     async createUser(data:Users): Promise<Users>{
-          const existing = await this.prisma.users.findUnique({
-               where: {
-                 username: data.username,
-               },
-             });
-         
-             if (existing) {
-               throw new ConflictException('username already exists');
-             }
-         
-             return this.prisma.users.create({
-               data,
-             });
-     }
+    return this.prisma.users.create({
+      data,
+    });
+  }
 }
